@@ -137,7 +137,8 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
     private void setController(){
         controller = new MusicController(this);
         controller.setPrevNextListeners(new View.OnClickListener() {
-            public void OnClick(View view) {
+            @Override
+            public void onClick(View v) {
                 playNext();
             }
         }, new View.OnClickListener(){
@@ -170,14 +171,14 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
 
     @Override
     public int getDuration() {
-        if(musicSrv!=null &amp;&amp; musicBound &amp;&amp; musicSrv.isPng()){
+        if(musicSrv!=null && musicBound && musicSrv.isPng()){
             return musicSrv.getDur();
         }else return 0;
     }
 
     @Override
     public int getCurrentPosition() {
-        if(musicSrv!=null &amp;&amp; musicBound &amp;&amp; musicSrv.isPng()){
+        if(musicSrv!=null && musicBound && musicSrv.isPng()){
             return musicSrv.getPosn();
         }else return 0;
 
@@ -190,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
 
     @Override
     public boolean isPlaying() {
-        if(musicSrv!=null &amp;&amp; musicBound){
+        if(musicSrv!=null && musicBound){
             return musicSrv.isPng();
         }
         return false;
