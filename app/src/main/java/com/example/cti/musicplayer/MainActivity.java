@@ -11,6 +11,9 @@ import android.os.IBinder;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
@@ -31,12 +34,20 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
     private boolean musicBound = false;
     private MusicController controller;
     private boolean paused=false, playbackPaused=false;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         songView = (ListView)findViewById(R.id.song_list);
+        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if(getSupportActionBar() != null)
+            getSupportActionBar().setTitle("Main page");
+        toolbar.setSubtitle("Test Subtitle");
+        toolbar.inflateMenu(R.menu.main);
         songList = new ArrayList<Song>();
         getSongList();
         Collections.sort(songList, new Comparator<Song>() {
@@ -48,6 +59,13 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
         SongAdapter songAdt = new SongAdapter(this, songList);
         songView.setAdapter(songAdt);
         setController();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+        return true;
     }
 
     private ServiceConnection musicConection = new ServiceConnection() {
@@ -76,13 +94,16 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
     }
 
     public void getSongList(){
+        //Recupera a informação da canção
         ContentResolver musicResolver = getContentResolver();
         Uri musicUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         Cursor musicCursor = musicResolver.query(musicUri,null,null,null,null);
         if(musicCursor != null && musicCursor.moveToFirst()){
+            //pega colunas
             int titleColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
             int idColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media._ID);
             int artistColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
+            //adiciona musicas a lista
             do{
                 long thisId = musicCursor.getLong(idColumn);
                 String thisTitle = musicCursor.getString(titleColumn);

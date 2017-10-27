@@ -97,8 +97,8 @@ MediaPlayer.OnCompletionListener{
 
     @Override
     public void onPrepared(MediaPlayer mp) {
-        player.start();
-        Intent notIntent = new Intent(this,MainActivity.class);
+        mp.start();
+        Intent notIntent = new Intent(this, MainActivity.class);
         notIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendInt = PendingIntent.getActivity(this,0,notIntent,PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -108,7 +108,7 @@ MediaPlayer.OnCompletionListener{
                 .setSmallIcon(R.drawable.play)
                 .setTicker(songTitle)
                 .setOngoing(true)
-                .setContentTitle(songTitle)
+                .setContentTitle("Playing")
                 .setContentText(songTitle);
         Notification not = builder.build();
 
