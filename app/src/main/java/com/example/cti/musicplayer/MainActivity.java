@@ -1,5 +1,6 @@
 package com.example.cti.musicplayer;
 
+import android.app.ActionBar;
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -16,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.ListView;
 import android.widget.MediaController;
 
@@ -44,10 +46,6 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
         songView = (ListView)findViewById(R.id.song_list);
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        if(getSupportActionBar() != null)
-            getSupportActionBar().setTitle("Main page");
-        toolbar.setSubtitle("Test Subtitle");
-        toolbar.inflateMenu(R.menu.main);
         songList = new ArrayList<Song>();
         getSongList();
         Collections.sort(songList, new Comparator<Song>() {
