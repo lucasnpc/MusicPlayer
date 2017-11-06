@@ -60,7 +60,8 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
         setContentView(R.layout.activity_main);
 
         songView = (ListView) findViewById(R.id.song_list);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
         songList = new ArrayList<Song>();
         getSongList();
         Collections.sort(songList, new Comparator<Song>() {
@@ -72,7 +73,6 @@ public class MainActivity extends AppCompatActivity implements MediaController.M
         SongAdapter songAdt = new SongAdapter(this, songList);
         songView.setAdapter(songAdt);
         setController();
-        setSupportActionBar(toolbar);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
